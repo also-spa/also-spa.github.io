@@ -198,7 +198,7 @@ footer.site-footer{padding-bottom:44px}
 #booking pre#summary{font-size:15px;line-height:1.85;color:#233a31;white-space:pre-wrap;overflow-wrap:anywhere}
 @media(max-width:700px){#booking>.booking-panel{padding:22px 18px}.guest-booking-card{padding:20px 14px}.guest-course-entry{padding:13px}.guest-addon-options{grid-template-columns:1fr}.guest-card-heading{gap:10px}#booking .guest-card-heading h4{font-size:22px}#booking .guest-course-addons>summary{align-items:flex-start}#booking .guest-course-addons>summary small{padding-top:1px}#booking .guest-course-heading h5{font-size:18px}}
 </style>
-<meta name="also-site-version" content="20261024-browser-preview-help"><style id="booking-fees-line-simple-style">
+<meta name="also-site-version" content="20261024-addon-duration-products"><style id="booking-fees-line-simple-style">
 #menu .party-two-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
 #menu .party-two-actions>.outline{grid-column:1/-1}
 #menu .party-two-actions .button{width:100%;padding-left:8px;padding-right:8px}
@@ -225,6 +225,12 @@ footer.site-footer{padding-bottom:44px}
 #preview-help a{display:inline-block;padding:10px 0;border-bottom:1px solid #819778;font-size:16px;color:#233a31}
 html.menu-interactive #preview-help{display:none}
 html:not(.menu-interactive) #menu .filter-row,html:not(.menu-interactive) #needs{display:none!important}
+</style><style id="addon-groups-style">
+#booking .guest-addon-sections{display:grid;gap:24px;margin-top:20px}
+#booking .guest-addon-group{min-width:0;margin:0;padding:0;border:0}
+#booking .guest-addon-group legend{float:none;width:100%;padding:0 0 10px;margin:0;color:#233a31;font-size:18px;font-weight:600;line-height:1.5;border-bottom:1px solid #cbd5c1}
+#booking .guest-addon-group .guest-addon-options{margin-top:12px}
+#booking .guest-addon-group[data-addon-kind=product] .guest-addon-option{background:#f4f0e6;border-color:#d9d4c5}
 </style></head>
 <body><header><a class="brand" href="#">ALSO SPA <small>BODY · MIND · SOUL</small></a><nav><a href="#recommend">找適合我的課程</a><a href="#menu">探索菜單</a><a class="line-link" href="https://line.me/R/oaMessage/%40alsospa" target="_top">LINE 洽詢 ↗</a></nav></header>
 <nav id="quick-menu" class="chips" aria-label="快捷菜單"><a href="#menu-all" data-group="全部">全部課程</a><a href="#menu-face" data-group="臉部">臉部護理</a><a href="#menu-body" data-group="身體">身體芳療</a><a href="#menu-forest" data-group="森林系列">森林系列</a></nav>
@@ -278,7 +284,7 @@ const CHAT_BASE='https://line.me/R/oaMessage/%40alsospa';
 function chatLink(text=''){return CHAT_BASE+(text?'/?'+encodeURIComponent(text):'');}
 let courses=[],category='全部',group='全部',need='',guests=Array.from({length:6},newGuest),partySize=1,activeGuest=0;
 const $=s=>document.querySelector(s),money=n=>'NT$ '+n.toLocaleString('zh-TW');
-const addons=[{"id":0,"name":"採耳舒壓","price":699,"min":30,"type":"body"},{"id":1,"name":"晶盤浴","price":699,"min":30,"type":"body"},{"id":2,"name":"眼部緊緻抗衰","price":1000,"type":"face"},{"id":3,"name":"頸部緊緻抗衰","price":1000,"type":"face"},{"id":4,"name":"手工清粉刺","price":599,"min":30,"type":"face"},{"id":5,"name":"植萃淨背嫩白護理","price":999,"type":"all"},{"id":6,"name":"太極能量石","price":999,"type":"all"},{"id":7,"name":"客製化","price":599,"type":"all"},{"id":8,"name":"晶亮眼部紓壓 SPA","price":999,"type":"all"},{"id":9,"name":"月見草","price":200,"type":"all"},{"id":10,"name":"火山灸熱石","price":599,"type":"all"},{"id":11,"name":"爆汗毯","price":599,"type":"all"},{"id":12,"name":"爆汗燃脂排毒","price":599,"type":"all"},{"id":13,"name":"美胸嫩白護膚","price":599,"type":"all"},{"id":14,"name":"美胸緊緻深療","price":999,"type":"all"},{"id":15,"name":"美臀嫩白護理","price":599,"type":"all"},{"id":16,"name":"美體嫩白敷膜・全身","price":1800,"type":"all"},{"id":17,"name":"美體嫩白敷膜・單區","price":599,"type":"all"},{"id":18,"name":"耳燭","price":999,"type":"all"},{"id":19,"name":"肩頸舒壓","price":599,"type":"all"},{"id":20,"name":"腋下嫩白護理","price":599,"type":"all"},{"id":21,"name":"臉部撥筋小顏 SPA","price":999,"type":"all"},{"id":22,"name":"臍燭","price":999,"type":"all","min":30},{"id":23,"name":"頭療排毒","price":599,"type":"all"},{"id":24,"name":"黑玫瑰敷膜","price":999,"type":"all"},{"id":25,"name":"芳療","price":599,"type":"all","min":20},{"id":26,"name":"芳療","price":999,"type":"all","min":30}];
+const addons=[{"id":0,"name":"採耳舒壓","price":699,"type":"body","kind":"product"},{"id":1,"name":"晶盤浴","price":699,"type":"body","kind":"product"},{"id":2,"name":"眼部緊緻抗衰","price":1000,"type":"face","kind":"product"},{"id":3,"name":"頸部緊緻抗衰","price":1000,"type":"face","kind":"product"},{"id":4,"name":"手工清粉刺","price":599,"min":30,"type":"face","kind":"service"},{"id":5,"name":"植萃淨背嫩白護理","price":999,"type":"all","kind":"service","min":30},{"id":6,"name":"太極能量石","price":999,"type":"all","kind":"service","min":30},{"id":7,"name":"客製化","price":599,"type":"all","kind":"service","min":20},{"id":8,"name":"晶亮眼部紓壓 SPA","price":999,"type":"all","kind":"service","min":30},{"id":9,"name":"月見草","price":200,"type":"all","kind":"product"},{"id":10,"name":"火山灸熱石","price":599,"type":"all","kind":"service","min":20},{"id":11,"name":"爆汗毯","price":599,"type":"all","kind":"service","min":20},{"id":12,"name":"爆汗燃脂排毒","price":599,"type":"all","kind":"service","min":20},{"id":13,"name":"美胸嫩白護膚","price":599,"type":"all","kind":"service","min":20},{"id":14,"name":"美胸緊緻深療","price":999,"type":"all","kind":"service","min":30},{"id":15,"name":"美臀嫩白護理","price":599,"type":"all","kind":"service","min":20},{"id":16,"name":"美體嫩白敷膜・全身","price":1800,"type":"all","kind":"product"},{"id":17,"name":"美體嫩白敷膜・單區","price":599,"type":"all","kind":"service","min":20},{"id":18,"name":"耳燭","price":999,"type":"all","kind":"service","min":30},{"id":19,"name":"肩頸舒壓","price":599,"type":"all","kind":"service","min":20},{"id":20,"name":"腋下嫩白護理","price":599,"type":"all","kind":"service","min":20},{"id":21,"name":"臉部撥筋小顏 SPA","price":999,"type":"all","kind":"service","min":30},{"id":22,"name":"臍燭","price":999,"type":"all","min":30,"kind":"service"},{"id":23,"name":"頭療排毒","price":599,"type":"all","kind":"service","min":20},{"id":24,"name":"黑玫瑰敷膜","price":999,"type":"all","kind":"service","min":30},{"id":25,"name":"芳療","price":599,"type":"all","min":20,"kind":"service"},{"id":26,"name":"芳療","price":999,"type":"all","min":30,"kind":"service"}];
 const needs=['放鬆','緊繃','孕期','腹部','美背','保濕','亮白','舒敏','緊緻','清潔'];
 function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 function label(c){return '會員價';}
@@ -290,7 +296,7 @@ function guestLabel(i){return '第'+(i+1)+'位';}
 function bookingReady(){return bookingGuests().every(g=>g.cart.size>0);}
 function applicable(c){const type=['SOTHYS','VAGHEGGI'].includes(c.cat)||c.id===19?'face':'body';return addons.filter(a=>a.type==='all'||a.type===type);}
 function pickedExtras(entry){return applicable(entry.course).filter(a=>entry.extras.has(a.id));}
-function guestTiming(g){let minutes=0,unknownTime=false;for(const entry of g.cart.values()){const extra=pickedExtras(entry);minutes+=entry.course.min+extra.reduce((n,a)=>n+(a.min||0),0);if(extra.some(a=>!a.min)||entry.course.detailNote)unknownTime=true;}return {minutes,unknownTime};}
+function guestTiming(g){let minutes=0,unknownTime=false;for(const entry of g.cart.values()){const extra=pickedExtras(entry).filter(a=>a.kind==='service');minutes+=entry.course.min+extra.reduce((n,a)=>n+(a.min||0),0);if(extra.some(a=>!a.min)||entry.course.detailNote)unknownTime=true;}return {minutes,unknownTime};}
 function entryCost(entry){return entry.course.vip+pickedExtras(entry).reduce((sum,a)=>sum+a.price,0);}
 function guestCost(g){return [...g.cart.values()].reduce((sum,entry)=>sum+entryCost(entry),0);}
 function courseBookingActions(c){
@@ -304,8 +310,8 @@ function buildBookingSummary(party,fields){
   lines.push('', '第'+(i+1)+'位'+(name?'｜'+name:''));
   if(!g.cart.size)lines.push('課程待確認');
   for(const entry of g.cart.values()){
-   const c=entry.course,extra=pickedExtras(entry);
-   lines.push('・'+c.name+'（'+c.min+' 分鐘）'+(extra.length?'；加購：'+extra.map(a=>a.name+(a.min?' '+a.min+' 分鐘':'')).join('、'):''));
+   const c=entry.course,extra=pickedExtras(entry),services=extra.filter(a=>a.kind==='service'),products=extra.filter(a=>a.kind==='product');
+   lines.push('・'+c.name+'（'+c.min+' 分鐘）'+(services.length?'；加購：'+services.map(a=>a.name+' '+a.min+' 分鐘').join('、'):'')+(products.length?'；產品：'+products.map(a=>a.name).join('、'):''));
   }
   if(g.note.trim())lines.push('需求：'+g.note.trim());
  });
@@ -347,12 +353,21 @@ function updateSummary(){
  });
 }
 function guestCourseOptions(g){return ['經典芳療','身體專項','SOTHYS','VAGHEGGI','森林系列'].map(cat=>'<optgroup label="'+esc(categoryLabel(cat))+'">'+courses.filter(c=>c.cat===cat).map(c=>'<option value="'+c.id+'"'+(g.cart.has(c.id)?' disabled':'')+'>'+esc(c.name)+' · '+c.min+' 分鐘 · '+money(c.vip)+(g.cart.has(c.id)?'（已選）':'')+'</option>').join('')+'</optgroup>').join('');}
+
+function addonGroups(course,extras,guestIndex){
+ return '<div class="guest-addon-sections">'+[['service','加購服務'],['product','產品']].map(([kind,title])=>{
+  const items=applicable(course).filter(a=>a.kind===kind);
+  if(!items.length)return '';
+  return `<fieldset class="guest-addon-group" data-addon-kind="${kind}"><legend>${title}</legend><div class="guest-addon-options">${items.map(a=>`<label class="guest-addon-option"><input type="checkbox" data-guest-extra="${guestIndex}" data-extra-course="${course.id}" data-extra-id="${a.id}" ${extras.has(a.id)?'checked':''}><span>${esc(a.name)}${a.kind==='service'?' · '+a.min+' 分鐘':''}<small class="addon-fee">+${money(a.price)}</small></span></label>`).join('')}</div></fieldset>`;
+ }).join('')+'</div>';
+}
+
 function updateBooking(){
  const opened=new Set([...document.querySelectorAll('#guests details[open]')].map(el=>el.id));
  $('#guests').innerHTML=bookingGuests().map((g,i)=>`<article id="guest-${i}" class="guest-booking-card" tabindex="-1" data-guest-index="${i}" aria-labelledby="guest-heading-${i}">
   <div class="guest-card-heading"><span class="guest-number">${String(i+1).padStart(2,'0')}</span><div><h4 id="guest-heading-${i}">${guestLabel(i)}的預約</h4></div></div>
   <div class="guest-selected-courses">${[...g.cart.values()].map(({course:c,extras})=>`<div class="guest-course-entry"><div class="guest-course-heading"><div><small>${esc(c.cat)} · ${c.min} 分鐘</small><h5>${esc(c.name)}</h5><p class="entry-fee" id="entry-fee-${i}-${c.id}">${extras.size?'含加購 '+money(entryCost({course:c,extras})):'會員價 '+money(c.vip)}</p></div><button type="button" class="guest-remove" data-remove-guest="${i}" data-remove-course="${c.id}" aria-label="從${guestLabel(i)}移除${esc(c.name)}">移除</button></div>
-   <details class="guest-course-addons" id="guest-addons-${i}-${c.id}" ${opened.has('guest-addons-'+i+'-'+c.id)?'open':''}><summary><span>選擇這堂課的加購項目</span><small id="extra-status-${i}-${c.id}">${extras.size?'已選 '+extras.size+' 項':'選填'}</small></summary><div class="guest-addon-options">${applicable(c).map(a=>`<label class="guest-addon-option"><input type="checkbox" data-guest-extra="${i}" data-extra-course="${c.id}" data-extra-id="${a.id}" ${extras.has(a.id)?'checked':''}><span>${esc(a.name)}${a.min?' · '+a.min+' 分鐘':''}<small class="addon-fee">+${money(a.price)}</small></span></label>`).join('')}</div></details></div>`).join('')}</div>
+   <details class="guest-course-addons" id="guest-addons-${i}-${c.id}" ${opened.has('guest-addons-'+i+'-'+c.id)?'open':''}><summary><span>選擇加購服務與產品</span><small id="extra-status-${i}-${c.id}">${extras.size?'已選 '+extras.size+' 項':'選填'}</small></summary>${addonGroups(c,extras,i)}</details></div>`).join('')}</div>
   <label for="guest-course-${i}">${g.cart.size?'再加入一項課程':'選擇課程'}<select id="guest-course-${i}" data-guest-course="${i}"><option value="">請選擇課程（可加入多項）</option>${guestCourseOptions(g)}</select></label>
   <a class="text-link guest-browse" data-browse-guest="${i}" href="#menu">替${guestLabel(i)}從菜單選課 →</a>
   <p class="guest-duration" id="guest-duration-${i}"></p><p class="guest-fee" id="guest-fee-${i}"></p>
